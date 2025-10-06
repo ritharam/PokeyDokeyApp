@@ -9,12 +9,12 @@ import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.pokeydokey.models.Pokemon;
 import com.example.pokeydokey.ui.PokemonViewModel;
 
 import android.widget.TextView;
 import android.widget.Toast;
-import com.bumptech.glide.Glide;
 import android.widget.ImageView;
 
 public class SearchActivity extends AppCompatActivity {
@@ -29,7 +29,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        getSupportActionBar().setTitle("Search Pokémon");
+        if (getSupportActionBar()!=null) getSupportActionBar().setTitle("Search Pokémon");
 
         input = findViewById(R.id.edit_search);
         btnSearch = findViewById(R.id.button_search);

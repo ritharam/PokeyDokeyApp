@@ -17,7 +17,6 @@ import java.util.concurrent.Executors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PokemonRepository {
     private PokeApiService apiService;
@@ -30,7 +29,6 @@ public class PokemonRepository {
         dbExecutor = Executors.newSingleThreadExecutor();
     }
 
-    // Network calls: callers provide callbacks
     public void getPokemonList(int limit, int offset, Callback<PokemonListResponse> cb) {
         apiService.getPokemonList(limit, offset).enqueue(cb);
     }
@@ -39,7 +37,6 @@ public class PokemonRepository {
         apiService.getPokemon(nameOrId.toLowerCase().trim()).enqueue(cb);
     }
 
-    // DB operations
     public LiveData<java.util.List<FavoritePokemon>> getAllFavorites() {
         return favoriteDao.getAllFavorites();
     }
@@ -50,5 +47,10 @@ public class PokemonRepository {
 
     public void deleteFavorite(final FavoritePokemon fav) {
         dbExecutor.execute(() -> favoriteDao.delete(fav));
+    }
+
+    public FavoritePokemon findFavoriteSync(final int id) {
+        // NOTE: use cautiously — executes on calling thread; prefer not UI thread.
+        return favoriteDao.findById(id);
     }
 }

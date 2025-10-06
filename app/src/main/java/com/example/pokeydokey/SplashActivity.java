@@ -2,25 +2,21 @@ package com.example.pokeydokey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 public class SplashActivity extends AppCompatActivity {
+    private static final long SPLASH_MS = 5000; // 5 seconds
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        // Simple visual; after 1s go to MainActivity
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            startActivity(new Intent(this, MainActivity.class));
+        new Handler().postDelayed(() -> {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
-        }, 3000);
-
+        }, SPLASH_MS);
     }
 }

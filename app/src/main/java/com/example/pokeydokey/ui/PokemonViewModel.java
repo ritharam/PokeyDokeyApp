@@ -12,11 +12,11 @@ import com.example.pokeydokey.models.PokemonListResponse;
 import com.example.pokeydokey.repository.PokemonRepository;
 import com.example.pokeydokey.room.FavoritePokemon;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.util.List;
 
 public class PokemonViewModel extends AndroidViewModel {
     private PokemonRepository repository;
@@ -43,7 +43,6 @@ public class PokemonViewModel extends AndroidViewModel {
                     error.postValue("Failed to fetch list");
                 }
             }
-
             @Override
             public void onFailure(Call<PokemonListResponse> call, Throwable t) {
                 error.postValue(t.getMessage());
@@ -61,7 +60,6 @@ public class PokemonViewModel extends AndroidViewModel {
                     error.postValue("Pokemon not found");
                 }
             }
-
             @Override
             public void onFailure(Call<Pokemon> call, Throwable t) {
                 error.postValue(t.getMessage());
@@ -80,7 +78,11 @@ public class PokemonViewModel extends AndroidViewModel {
         repository.deleteFavorite(fav);
     }
 
-    public LiveData<java.util.List<com.example.pokeydokey.room.FavoritePokemon>> getAllFavorites() {
+    public LiveData<java.util.List<FavoritePokemon>> getAllFavorites() {
         return repository.getAllFavorites();
+    }
+
+    public FavoritePokemon findFavoriteSync(int id) {
+        return repository.findFavoriteSync(id);
     }
 }

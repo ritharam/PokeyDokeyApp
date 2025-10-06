@@ -19,7 +19,6 @@ import android.widget.TextView;
 import java.util.List;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder> {
-
     private List<PokemonResult> list;
     private Context context;
 
@@ -55,9 +54,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     }
 
     @Override
-    public int getItemCount() {
-        return list==null?0:list.size();
-    }
+    public int getItemCount() { return list==null?0:list.size(); }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;

@@ -13,6 +13,7 @@ import com.example.pokeydokey.DetailsActivity;
 import com.example.pokeydokey.R;
 import com.example.pokeydokey.room.FavoritePokemon;
 
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,12 +21,18 @@ import java.util.List;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> {
 
+    public interface OnFavoriteActionListener {
+        void onRemove(FavoritePokemon fav);
+    }
+
     private List<FavoritePokemon> list;
     private Context context;
+    private OnFavoriteActionListener listener;
 
-    public FavoritesAdapter(Context context, List<FavoritePokemon> list) {
+    public FavoritesAdapter(Context context, List<FavoritePokemon> list, OnFavoriteActionListener listener) {
         this.context = context;
         this.list = list;
+        this.listener = listener;
     }
 
     public void updateList(List<FavoritePokemon> l) {
@@ -35,7 +42,7 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
 
     @Override
     public FavoritesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pokemon, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favorite, parent, false);
         return new ViewHolder(v);
     }
 
@@ -50,6 +57,10 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
             intent.putExtra("name", item.getName());
             context.startActivity(intent);
         });
+
+        holder.btnDelete.setOnClickListener(v -> {
+            if (listener != null) listener.onRemove(item);
+        });
     }
 
     @Override
@@ -60,10 +71,12 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.View
     static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView name;
+        ImageButton btnDelete;
         ViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.pokemon_image);
             name = itemView.findViewById(R.id.pokemon_name);
+            btnDelete = itemView.findViewById(R.id.btn_delete);
         }
     }
 

@@ -19,28 +19,9 @@ public class Pokemon {
     public List<TypeSlot> getTypes() { return types; }
     public List<StatSlot> getStats() { return stats; }
 
-    public static class Sprites {
-        public String front_default;
-    }
-
-    public static class TypeSlot {
-        public int slot;
-        public Type type;
-    }
-
-    public static class Type {
-        public String name;
-        public String url;
-    }
-
-    public static class StatSlot {
-        public int base_stat;
-        public int effort;
-        public Stat stat;
-    }
-
-    public static class Stat {
-        public String name;
-        public String url;
-    }
+    public static class Sprites { public String front_default; }
+    public static class TypeSlot { public int slot; public Type type; }
+    public static class Type { public String name; public String url; }
+    public static class StatSlot { public int base_stat; public int effort; public Stat stat; }
+    public static class Stat { public String name; public String url; }
 }

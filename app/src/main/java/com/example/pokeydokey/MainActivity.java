@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pokeydokey.adapters.PokemonAdapter;
-import com.example.pokeydokey.models.PokemonResult;
 import com.example.pokeydokey.ui.PokemonViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setTitle("Pokémon Finder");
+        if (getSupportActionBar()!=null) getSupportActionBar().setTitle("Pokémon Finder");
 
         recyclerView = findViewById(R.id.recycler);
         fabSearch = findViewById(R.id.fab_search);
@@ -40,15 +37,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(PokemonViewModel.class);
-        viewModel.getPokemonList().observe(this, results -> {
-            adapter.updateList(results);
-        });
-
+        viewModel.getPokemonList().observe(this, results -> adapter.updateList(results));
         viewModel.getError().observe(this, s -> {
-            if (s != null) Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+            if (s != null) android.widget.Toast.makeText(this, s, android.widget.Toast.LENGTH_SHORT).show();
         });
 
-        // load first 151 Pokemon
         viewModel.fetchPokemonList(151, 0);
 
         fabSearch.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));

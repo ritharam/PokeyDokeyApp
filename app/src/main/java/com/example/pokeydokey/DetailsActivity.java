@@ -27,6 +27,7 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
         image = findViewById(R.id.details_image);
         txtName = findViewById(R.id.details_name);
         txtTypes = findViewById(R.id.details_types);
@@ -36,10 +37,7 @@ public class DetailsActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(PokemonViewModel.class);
 
         String name = getIntent().getStringExtra("name");
-        if (name == null) {
-            finish();
-            return;
-        }
+        if (name == null) { finish(); return; }
 
         viewModel.fetchPokemonDetails(name);
 
@@ -58,8 +56,17 @@ public class DetailsActivity extends AppCompatActivity {
             if (current == null) return;
             FavoritePokemon fav = new FavoritePokemon(current.getId(), current.getName(),
                     current.getSprites()!=null?current.getSprites().front_default:null);
-            viewModel.addFavorite(current);
-            Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+            // Toggle: if exists -> remove; else add
+            new Thread(() -> {
+                FavoritePokemon existing = viewModel.findFavoriteSync(current.getId());
+                if (existing == null) {
+                    viewModel.addFavorite(current);
+                    runOnUiThread(() -> Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show());
+                } else {
+                    viewModel.removeFavorite(existing);
+                    runOnUiThread(() -> Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show());
+                }
+            }).start();
         });
     }
 

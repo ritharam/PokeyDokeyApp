@@ -22,16 +22,17 @@ public class FavoritesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
-        getSupportActionBar().setTitle("Favorites");
+        if (getSupportActionBar()!=null) getSupportActionBar().setTitle("Favorites");
 
         recycler = findViewById(R.id.recycler_fav);
-        adapter = new FavoritesAdapter(this, new ArrayList<>());
+        adapter = new FavoritesAdapter(this, new ArrayList<>(), fav -> {
+            // remove action
+            viewModel.removeFavorite(fav);
+        });
         recycler.setLayoutManager(new GridLayoutManager(this, 3));
         recycler.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(PokemonViewModel.class);
-        viewModel.getAllFavorites().observe(this, favorites -> {
-            adapter.updateList(favorites);
-        });
+        viewModel.getAllFavorites().observe(this, favorites -> adapter.updateList(favorites));
     }
 }
