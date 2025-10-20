@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Star/AndroidStudioProjects/PokeyDokey/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1245" />
+        <entry key="..\:/Users/Star/AndroidStudioProjects/PokeyDokey/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1245" />
         <entry key="..\:/Users/Star/AndroidStudioProjects/PokeyDokey/app/src/main/res/layout/activity_details.xml" value="0.21614583333333334" />
         <entry key="..\:/Users/Star/AndroidStudioProjects/PokeyDokey/app/src/main/res/layout/activity_favorites.xml" value="0.1782051282051282" />
         <entry key="..\:/Users/Star/AndroidStudioProjects/PokeyDokey/app/src/main/res/layout/activity_home.xml" value="0.21614583333333334" />
